@@ -1,9 +1,9 @@
 # async-rule-evaluator
 
 This module is a Java version of a Javascript package [async-rule-evaluator](https://github.com/gas-buddy/async-rule-evaluator).
-A simple DSL based on [Filtrex](https://github.com/joewalnes/filtrex) and its forks. The intent is to add lazy evaluation and
-async property lookup support, as the NPM module has, but right now this module is synchronous. So this means you must present
-all values you intend to use in the rules up front as a map.
+A simple DSL based on [Filtrex](https://github.com/joewalnes/filtrex) and its forks. This library supports lazy evaluation and
+async property lookup support, as the NPM module does, but adopts a more Java-centric pattern of
+synchronous calls for everything (so you should run it in a fiber or some such).
 
 The main thing we took from Filtrex is the grammar, which seemed like a good one,
 but modified for our use case. For example, we removed the `x of y` syntax in favor
@@ -81,5 +81,8 @@ length(x) | Return the length of an array (or the length property of an object),
 lower(x) | If x is null or undefined, return it, else return x.toString().toLocaleLowerCase()
 sqrt(x) | Square root
 substr(x, start, end) | Get a part of a string
+union(a, b, c...) | Union of arrays (variable length of args)
+intersection(a, b, c...) | Intersection of arrays (variable length of args)
+difference(a, b, c...) | Remove all elements of a that are in b, c...
 
 Operator precedence follows that of any sane language.

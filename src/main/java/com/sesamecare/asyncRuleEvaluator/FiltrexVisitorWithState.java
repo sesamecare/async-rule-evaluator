@@ -27,6 +27,26 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
         return new Value(list);
     }
 
+    private Value resolve(String symbol) {
+        var paths = symbol.split("\\.");
+        Map<String, Value> current = inputData;
+        for (int i = 0; i < paths.length; i++) {
+            var path = paths[i];
+            if (current.containsKey(path)) {
+                var value = current.get(path);
+                if (value.getType() == ValueType.MAP) {
+                    current = value.getMap();
+                }
+                if (i == paths.length - 1) {
+                    return value;
+                }
+            } else {
+                return Value.NULL;
+            }
+        }
+        return Value.NULL;
+    }
+
     @Override
     public Value visitExpressions(FiltrexParser.ExpressionsContext ctx) {
         return visit(ctx.e());
@@ -74,24 +94,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
     @Override
     public Value visitSymbol(FiltrexParser.SymbolContext ctx) {
         var symbol = ctx.SYMBOL().toString();
-        var paths = symbol.split("\\.");
-        Map<String, Value> current = inputData;
-        for (int i = 0; i < paths.length; i++) {
-            var path = paths[i];
-            if (current.containsKey(path)) {
-                var value = current.get(path);
-                if (value.getType() == Value.ValueType.MAP) {
-                    current = value.getMap();
-                } else if (i == paths.length - 1) {
-                    return value;
-                } else {
-                    return Value.NULL;
-                }
-            } else {
-                return Value.NULL;
-            }
-        }
-        throw new FiltrexRuntimeException("Empty symbol encountered");
+        return resolve(symbol);
     }
 
     @Override
@@ -118,7 +121,8 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
         var args = visit(ctx.argsList());
         var result = BuiltInFunctions.execute(fn, args.getArray());
         if (result == null) {
-            throw new FiltrexRuntimeException("Unknown function " + fn);
+            var custom = resolve(fn);
+            result = custom.apply(args.getArray());
         }
         return result;
     }
@@ -128,7 +132,8 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
         var fn = ctx.SYMBOL().getText();
         var result = BuiltInFunctions.execute(fn, Value.EMPTY.getArray());
         if (result == null) {
-            throw new FiltrexRuntimeException("Unknown function " + fn);
+            var custom = resolve(fn);
+            result = custom.apply(Value.EMPTY.getArray());
         }
         return result;
     }
@@ -223,7 +228,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
 
     @Override
     public Value visitArrayExpression(FiltrexParser.ArrayExpressionContext ctx) {
-        return null;
+        return new Value(visit(ctx.e()).asArray());
     }
 
     @Override
@@ -278,9 +283,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
 
     @Override
     public Value visitSingleElement(FiltrexParser.SingleElementContext ctx) {
-        var arg = new ArrayList<Value>();
-        arg.add(visit(ctx.e()));
-        return new Value(arg);
+        return new Value(visit(ctx.e()).asArray());
     }
 
     @Override

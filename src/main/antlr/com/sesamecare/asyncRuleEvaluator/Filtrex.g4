@@ -3,15 +3,14 @@ grammar Filtrex;
 // Entry Point
 expressions: e EOF;
 
-e: '(' e ')'                         # ParenExpression
-| '-' e                            # UnaryMinus
+e: '(' e ')'                        # ParenExpression
+| '-' e                             # UnaryMinus
 | NOT e                             # Not
 | NOT_TILDE e                       # AlternativeNot
 | e '^' e                           # Power
 | e op=('*' | '/') e                # MulDiv
 | e '%' e                           # Modulo
 | e op=('+' | '-') e                # AddSub
-| e '-' e                           # Subtraction
 | e '<' e                           # LessThan
 | e '<=' e                          # LessThanEquals
 | e '>' e                           # GreaterThan

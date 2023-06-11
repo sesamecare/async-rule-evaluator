@@ -6,18 +6,19 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Value implements Comparable<Value> {
     @Override
-    public int compareTo(Value o) {
-        if (this.canBeDecimal() && o.canBeDecimal()) {
-            return this.asDecimal().compareTo(o.asDecimal());
+    public int compareTo(Value that) {
+        var me = this.resolve();
+        var them = that.resolve();
+        if (me.canBeDecimal() && them.canBeDecimal()) {
+            return me.asDecimal().compareTo(them.asDecimal());
         }
-        return StringUtils.compare(this.asStringOrNull(), o.asStringOrNull());
+        return StringUtils.compare(me.asStringOrNull(), them.asStringOrNull());
     }
-
-    enum ValueType { BOOLEAN, STRING, NULL, DECIMAL, ARRAY, MAP };
 
     private ValueType type;
 
@@ -29,6 +30,8 @@ public class Value implements Comparable<Value> {
     private List<Value> array;
 
     private Map<String, Value> map;
+
+    private Function<List<Value>, Value> func;
 
     public Value(boolean b) {
         this.type = ValueType.BOOLEAN;
@@ -69,18 +72,53 @@ public class Value implements Comparable<Value> {
         this.decimal = BigDecimal.valueOf(d);
     }
 
+    public Value(Function<List<Value>, Value> f, boolean cacheResult) {
+        this.type = cacheResult ? ValueType.MEMOIZED : ValueType.FUNCTION;
+        this.func = f;
+    }
+
+    /**
+     * Used when this value is called as a function in the filter source,
+     * as opposed to automatic resolution when referenced as a value
+     */
+    public Value apply(List<Value> args) {
+        if (this.type != ValueType.FUNCTION) {
+            throw new FiltrexRuntimeException("Cannot apply non-function type");
+        }
+        return this.func.apply(args);
+    }
+
+    Value resolve() {
+        if (this.type == ValueType.MEMOIZED) {
+            var resolved = this.func.apply(Value.EMPTY.array);
+            // TODO is there a nicer way to do a brain transplant?
+            this.type = resolved.type;
+            this.bool = resolved.bool;
+            this.map = resolved.map;
+            this.str = resolved.str;
+            this.array = resolved.array;
+            this.decimal = resolved.decimal;
+            this.func = resolved.func;
+        } else if (this.type == ValueType.FUNCTION) {
+            return this.func.apply(Value.EMPTY.array);
+        }
+        return this;
+    }
+
     public List<Value> getArray() throws FiltrexRuntimeException {
-        if (this.type != ValueType.ARRAY) {
+        var resolved = this.resolve();
+        if (resolved.type != ValueType.ARRAY) {
             throw new FiltrexRuntimeException("Invalid conversion of non-array type");
         }
-        return array;
+        return resolved.array;
     }
 
     public Map<String, Value> getMap() {
-        if (this.type != ValueType.MAP) {
+        var resolved = this.resolve();
+        if (resolved.type != ValueType.MAP) {
             throw new Error("Invalid conversion of non-map type");
         }
-        return map;
+        return resolved.map;
     }
 
     public ValueType getType() {
@@ -88,15 +126,16 @@ public class Value implements Comparable<Value> {
     }
 
     public boolean asBoolean() {
-        switch (type) {
+        var resolved = this.resolve();
+        switch (resolved.type) {
             case BOOLEAN:
-                return bool;
+                return resolved.bool;
             case DECIMAL:
-                return decimal.compareTo(BigDecimal.ZERO) != 0;
+                return resolved.decimal.compareTo(BigDecimal.ZERO) != 0;
             case NULL:
                 return false;
             case STRING:
-                return str != null && str.length() > 0;
+                return resolved.str != null && resolved.str.length() > 0;
             case ARRAY:
                 return true;
             case MAP:
@@ -106,17 +145,18 @@ public class Value implements Comparable<Value> {
     }
 
     public String asStringOrNull() {
+        var resolved = this.resolve();
         switch (type) {
             case BOOLEAN:
-                return Boolean.toString(this.bool);
+                return Boolean.toString(resolved.bool);
             case NULL:
                 return null;
             case STRING:
-                return this.str;
+                return resolved.str;
             case DECIMAL:
-                return this.decimal.toString();
+                return resolved.decimal.toString();
             case ARRAY:
-                return this.array.stream().map(Value::asStringOrNull).collect(Collectors.joining(","));
+                return resolved.array.stream().map(Value::asStringOrNull).collect(Collectors.joining(","));
             case MAP:
                 throw new Error("Cannot convert map to string");
         }
@@ -125,33 +165,45 @@ public class Value implements Comparable<Value> {
 
     @Override
     public String toString() {
+        var resolved = this.resolve();
         switch (type) {
             case BOOLEAN:
-                return Boolean.toString(this.bool);
+                return Boolean.toString(resolved.bool);
             case NULL:
                 return "";
             case STRING:
-                return this.str;
+                return resolved.str;
             case DECIMAL:
-                return this.decimal.stripTrailingZeros().toString();
+                return resolved.decimal.stripTrailingZeros().toString();
             case ARRAY:
-                return "[" + this.array.stream().map(Value::toString).collect(Collectors.joining(",")) + "]";
+                return "[" + resolved.array.stream().map(Value::toString).collect(Collectors.joining(",")) + "]";
             case MAP:
-                return "{" + this.map.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue().toString()).collect(Collectors.joining(",")) + "}";
+                return "{" + resolved.map.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue().toString()).collect(Collectors.joining(",")) + "}";
         }
         throw new FiltrexRuntimeException("Unknown type");
     }
 
+    public List<Value> asArray() {
+        var resolved = this.resolve();
+        if (resolved.type == ValueType.ARRAY) {
+            return resolved.array;
+        }
+        var list = new ArrayList<Value>();
+        list.add(resolved);
+        return list;
+    }
+
     public BigDecimal asDecimal() {
+        var resolved = this.resolve();
         switch (type) {
             case BOOLEAN:
-                return bool ? BigDecimal.ONE : BigDecimal.ZERO;
+                return resolved.bool ? BigDecimal.ONE : BigDecimal.ZERO;
             case NULL:
                 return BigDecimal.ZERO;
             case STRING:
-                return new BigDecimal(str);
+                return new BigDecimal(resolved.str);
             case DECIMAL:
-                return decimal;
+                return resolved.decimal;
             case ARRAY:
                 throw new RuntimeException("Invalid conversion of array to decimal");
             case MAP:
@@ -161,12 +213,13 @@ public class Value implements Comparable<Value> {
     }
 
     public boolean canBeDecimal() {
-        if (this.type == ValueType.DECIMAL || this.type == ValueType.BOOLEAN) {
+        var resolved = this.resolve();
+        if (resolved.type == ValueType.DECIMAL || resolved.type == ValueType.BOOLEAN) {
             return true;
         }
-        if (this.type == ValueType.STRING) {
+        if (resolved.type == ValueType.STRING) {
             try {
-                Double.valueOf(this.str);
+                Double.valueOf(resolved.str);
                 return true;
             } catch (NumberFormatException n) {
                 return false;
@@ -178,15 +231,16 @@ public class Value implements Comparable<Value> {
     public Value in(Value other, boolean exactMatch) {
         // NOTE: this means that the following is true:
         // [[1]] in [1]
-        if (this.type == ValueType.ARRAY) {
-            for (var v : this.getArray()) {
+        var resolved = this.resolve();
+        if (resolved.type == ValueType.ARRAY) {
+            for (var v : resolved.getArray()) {
                 if (!v.in(other, exactMatch).asBoolean()) {
                     return Value.FALSE;
                 }
             }
             return Value.TRUE;
         }
-        var otherArray = other.type == ValueType.ARRAY ? other.getArray() : List.of(other);
+        var otherArray = other.asArray();
         for (var v : otherArray) {
             if ((!exactMatch || v.type == this.type) && v.compareTo(this) == 0) {
                 return Value.TRUE;

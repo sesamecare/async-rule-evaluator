@@ -51,12 +51,12 @@ public class FiltrexArrayTests extends BaseFiltrexTest {
     @Test
     public void testArray() {
         var array = runFilter("(42, \"fifty\", pi)", Map.of("pi", new Value(BigDecimal.valueOf(Math.PI))));
-        assertThat(array.getType(), Matchers.equalTo(Value.ValueType.ARRAY));
-        assertThat(array.getArray().get(0).getType(), Matchers.equalTo(Value.ValueType.DECIMAL));
+        assertThat(array.getType(), Matchers.equalTo(ValueType.ARRAY));
+        assertThat(array.getArray().get(0).getType(), Matchers.equalTo(ValueType.DECIMAL));
         assertThat(array.getArray().get(0).asDecimal(), Matchers.comparesEqualTo(BigDecimal.valueOf(42)));
-        assertThat(array.getArray().get(1).getType(), Matchers.equalTo(Value.ValueType.STRING));
+        assertThat(array.getArray().get(1).getType(), Matchers.equalTo(ValueType.STRING));
         assertThat(array.getArray().get(1).toString(), Matchers.equalTo("fifty"));
-        assertThat(array.getArray().get(2).getType(), Matchers.equalTo(Value.ValueType.DECIMAL));
+        assertThat(array.getArray().get(2).getType(), Matchers.equalTo(ValueType.DECIMAL));
         assertThat(array.getArray().get(2).asDecimal(), Matchers.comparesEqualTo(BigDecimal.valueOf(Math.PI)));
         assertThat(array.getArray().size(), Matchers.equalTo(3));
     }
