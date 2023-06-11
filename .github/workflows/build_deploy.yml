@@ -21,9 +21,17 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'oracle' # See 'Supported distributions' for available options
+          java-version: '17'
+      - name: Build with gradle
+        run: ./gradlew build
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle' # See 'Supported distributions' for available options
           java-version: '20'
-      - name: Build and test with gradle
-        run: ./gradlew build test
+
+      - name: Run tests
+        run: ./gradlew test
 
       - name: Test Report
         uses: dorny/test-reporter@v1
