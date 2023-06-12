@@ -22,8 +22,11 @@ jobs:
         with:
           distribution: 'oracle' # See 'Supported distributions' for available options
           java-version: '17'
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Build with gradle
-        run: ./gradlew build
+        run: ./gradlew build --no-daemon
 
       - uses: actions/setup-java@v3
         with:
@@ -31,7 +34,7 @@ jobs:
           java-version: '20'
 
       - name: Run tests
-        run: ./gradlew test
+        run: ./gradlew test --no-daemon
 
       - name: Test Report
         uses: dorny/test-reporter@v1
