@@ -33,7 +33,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
         for (int i = 0; i < paths.length; i++) {
             var path = paths[i];
             if (current.containsKey(path)) {
-                var value = current.get(path);
+                var value = current.get(path).resolve();
                 if (value.getType() == ValueType.MAP) {
                     current = value.getMap();
                 }

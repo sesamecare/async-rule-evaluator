@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4b7774a-ffb7-481d-949f-52f5a069dc9a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/sesamecare/asyncRuleEvaluator/FiltrexLazyContextTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +105,7 @@
       <recent name="$PROJECT_DIR$/src/main/antlr/com/sesamecare/asyncRuleEvaluator" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.FiltrexSetTests.testUnion">
+  <component name="RunManager" selected="Gradle.FiltrexLazyContextTests.testLazyMap">
     <configuration name="FiltrexFunctionTests.testBasicFunctionTypes" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -126,6 +130,30 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
+    <configuration name="FiltrexLazyContextTests.testLazyMap" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.sesamecare.asyncRuleEvaluator.FiltrexLazyContextTests.testLazyMap&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <configuration name="FiltrexSetTests.testUnion" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -140,30 +168,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;com.sesamecare.asyncRuleEvaluator.FiltrexSetTests.testUnion&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="FiltrexSyntaxTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;com.sesamecare.asyncRuleEvaluator.FiltrexSyntaxTests&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -227,11 +231,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.FiltrexLazyContextTests.testLazyMap" />
         <item itemvalue="Gradle.FiltrexSetTests.testUnion" />
         <item itemvalue="Gradle.Tests in 'com.sesamecare.asyncRuleEvaluator'" />
         <item itemvalue="Gradle.FiltrexFunctionTests.testBasicFunctionTypes" />
         <item itemvalue="Gradle.Tests in 'async-rule-evaluator.test'" />
-        <item itemvalue="Gradle.FiltrexSyntaxTests" />
       </list>
     </recent_temporary>
   </component>
@@ -245,7 +249,7 @@
       <updated>1686405410591</updated>
       <workItem from="1686405411602" duration="628000" />
       <workItem from="1686406047322" duration="18498000" />
-      <workItem from="1686442051169" duration="16979000" />
+      <workItem from="1686442051169" duration="22847000" />
     </task>
     <servers />
   </component>
@@ -324,6 +328,26 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
           <line>119</line>
           <option name="timeStamp" value="74" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
+          <line>131</line>
+          <option name="timeStamp" value="76" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/sesamecare/asyncRuleEvaluator/FiltrexLazyContextTests.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/sesamecare/asyncRuleEvaluator/FiltrexLazyContextTests.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/sesamecare/asyncRuleEvaluator/FiltrexLazyContextTests.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="82" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

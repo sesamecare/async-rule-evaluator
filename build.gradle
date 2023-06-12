@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'antlr'
+    id 'maven-publish'
 }
 
 repositories() {
@@ -15,6 +16,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.hamcrest:java-hamcrest:2.0.0.0")
+    testImplementation("com.google.code.gson:gson:2.10.1")
 }
 
 generateGrammarSource {
@@ -27,4 +29,17 @@ compileJava {
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+  repositories {
+    maven {
+      name = "OSSRH"
+      url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+      credentials {
+        username = System.getenv("MAVEN_USERNAME")
+        password = System.getenv("MAVEN_PASSWORD")
+      }
+    }
+  }
 }
