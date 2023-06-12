@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
-public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
+class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
     Map<String, Value> inputData;
     Map<String, Supplier<Value>> functions;
 

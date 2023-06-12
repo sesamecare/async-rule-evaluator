@@ -56,6 +56,16 @@ java {
     withJavadocJar()
     withSourcesJar()
 }
+
+javadoc {
+    exclude("com/sesamecare/asyncRuleEvaluator/FiltrexLexer.java")
+    exclude("com/sesamecare/asyncRuleEvaluator/FiltrexParser.java")
+    exclude("com/sesamecare/asyncRuleEvaluator/FiltrexBaseListener.java")
+    exclude("com/sesamecare/asyncRuleEvaluator/FiltrexBaseVisitor.java")
+}
+
+sourcesJar.dependsOn ':generateGrammarSource'
+
 nexusPublishing {
     repositories {
         sonatype {
