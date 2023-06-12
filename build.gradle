@@ -1,8 +1,13 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'antlr'
+    id 'signing'
     id 'maven-publish'
+    id('io.github.gradle-nexus.publish-plugin') version '1.1.0'
 }
+
+group = "com.sesamecare"
+version = "0.0.1-SNAPSHOT"
 
 repositories() {
     mavenCentral()
@@ -19,6 +24,22 @@ dependencies {
     testImplementation("com.google.code.gson:gson:2.10.1")
 }
 
+ext.genOutputDir = file("$buildDir/generated-resources")
+
+task generateVersionTxt()  {
+    ext.outputFile = file("$genOutputDir/version.txt")
+    outputs.file(outputFile)
+    doLast {
+        outputFile.text = """GroupId: ${project.group}
+Name: ${project.name}
+Version: $version
+Build-time: ${java.time.LocalDateTime.now()}
+"""
+    }
+}
+
+sourceSets.main.output.dir genOutputDir, builtBy: generateVersionTxt
+
 generateGrammarSource {
     arguments += ["-visitor", "-package", "com.sesamecare.asyncRuleEvaluator"]
 }
@@ -31,15 +52,62 @@ test {
     useJUnitPlatform()
 }
 
-publishing {
-  repositories {
-    maven {
-      name = "OSSRH"
-      url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-      credentials {
-        username = System.getenv("MAVEN_USERNAME")
-        password = System.getenv("MAVEN_PASSWORD")
-      }
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+javadoc {
+    exclude("com/sesamecare/asyncRuleEvaluator/FiltrexLexer.java")
+    exclude("com/sesamecare/asyncRuleEvaluator/FiltrexParser.java")
+    exclude("com/sesamecare/asyncRuleEvaluator/FiltrexBaseListener.java")
+    exclude("com/sesamecare/asyncRuleEvaluator/FiltrexBaseVisitor.java")
+}
+
+sourcesJar.dependsOn ':generateGrammarSource'
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+        }
     }
-  }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from(components.java)
+            pom {
+                name = 'async-rule-evaluator'
+                description = 'A simple DSL based on https://github.com/joewalnes/filtrex and its forks'
+                url = 'https://github.com/sesamecare/async-rule-evaluator'
+                licenses {
+                    license {
+                        name = 'The MIT License'
+                        url = 'https://opensource.org/license/mit/'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'djmax'
+                        name = 'Max Metral'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/sesamecare/async-rule-evaluator'
+                    connection = 'scm:git://github.com/sesamecare/async-rule-evaluator.git'
+                    developerConnection = 'scm:git://github.com/sesamecare/async-rule-evaluator.git'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    def signingKey = findProperty("signingKey")
+    def signingPassword = findProperty("signingPassword")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.mavenJava
 }

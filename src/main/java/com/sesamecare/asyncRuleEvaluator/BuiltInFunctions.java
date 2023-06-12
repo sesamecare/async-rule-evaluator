@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuiltInFunctions {
+class BuiltInFunctions {
     static MathContext mathContext = new MathContext(4, RoundingMode.HALF_UP);
     public static Value execute(String fn, List<Value> args) {
         switch (fn) {

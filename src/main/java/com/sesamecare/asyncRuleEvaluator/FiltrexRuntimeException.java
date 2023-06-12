@@ -1,7 +1,13 @@
 package com.sesamecare.asyncRuleEvaluator;
 
+/**
+ * An exception encountered during the running of a filter expression
+ */
 public class FiltrexRuntimeException extends RuntimeException {
-    public FiltrexRuntimeException(String message) {
+    /**
+     * @param message
+     */
+    FiltrexRuntimeException(String message) {
         super(message);
     }
 }
