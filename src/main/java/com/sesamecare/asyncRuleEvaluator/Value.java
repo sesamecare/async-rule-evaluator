@@ -33,7 +33,7 @@ public class Value implements Comparable<Value> {
 
     private Function<List<Value>, Value> func;
 
-    public Value(boolean b) {
+    private Value(boolean b) {
         this.type = ValueType.BOOLEAN;
         this.bool = b;
     }
@@ -72,9 +72,18 @@ public class Value implements Comparable<Value> {
         this.decimal = BigDecimal.valueOf(d);
     }
 
-    public Value(Function<List<Value>, Value> f, boolean cacheResult) {
-        this.type = cacheResult ? ValueType.MEMOIZED : ValueType.FUNCTION;
-        this.func = f;
+    public static Value memoized(Function<List<Value>, Value> f) {
+        var memo = new Value();
+        memo.type = ValueType.MEMOIZED;
+        memo.func = f;
+        return memo;
+    }
+
+    public static Value func(Function<List<Value>, Value> f) {
+        var memo = new Value();
+        memo.type = ValueType.FUNCTION;
+        memo.func = f;
+        return memo;
     }
 
     /**

@@ -34,9 +34,9 @@ public class FiltrexLazyContextTests extends BaseFiltrexTest {
             return new Value(Map.of(
                     "id", new Value(id),
                     "name", new Value(name),
-                    "callCount", new Value(args -> new Value(this.callCount++), false),
-                    "originalCallCount", new Value(args -> new Value(this.callCount++), true),
-                    "httpBin", new Value(args -> this.getHttpBin(), true)
+                    "callCount", Value.func(args -> new Value(this.callCount++)),
+                    "originalCallCount", Value.memoized(args -> new Value(this.callCount++)),
+                    "httpBin", Value.memoized(args -> this.getHttpBin())
             ));
         }
     }
@@ -47,7 +47,7 @@ public class FiltrexLazyContextTests extends BaseFiltrexTest {
         user.id = 1;
         user.name = "John Doe";
         var context = Map.of(
-                "user", new Value(args -> user.getValueMap(), true)
+                "user", Value.memoized(args -> user.getValueMap())
         );
         pass("user.id == 1", context);
         pass("user.name == \"John Doe\"", context);

@@ -10,17 +10,17 @@ public class FiltrexFunctionTests extends BaseFiltrexTest {
     public void testBasicFunctionTypes() {
         AtomicBoolean called = new AtomicBoolean(false);
         var fns = Map.of(
-                "one", new Value(args -> new Value(1), false),
+                "one", Value.func(args -> new Value(1)),
                 "thing", new Value(Map.of(
-                        "echo", new Value(args -> args.get(0), false)
+                        "echo", Value.func(args -> args.get(0))
                 )),
-                "once", new Value(args -> {
+                "once", Value.memoized(args -> {
                     if (called.get()) {
                         throw new RuntimeException("once() called twice");
                     }
                     called.set(true);
                     return new Value(1);
-                }, true)
+                })
         );
         pass("one() == 1", fns);
         fails("one() == 2", fns);

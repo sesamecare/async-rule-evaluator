@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a4b7774a-ffb7-481d-949f-52f5a069dc9a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/sesamecare/asyncRuleEvaluator/FiltrexLazyContextTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/Value.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/Value.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/sesamecare/asyncRuleEvaluator/FiltrexFunctionTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/sesamecare/asyncRuleEvaluator/FiltrexFunctionTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/sesamecare/asyncRuleEvaluator/FiltrexLazyContextTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/sesamecare/asyncRuleEvaluator/FiltrexLazyContextTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +105,7 @@
       <recent name="$PROJECT_DIR$/src/main/antlr/com/sesamecare/asyncRuleEvaluator" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.FiltrexLazyContextTests.testLazyMap">
+  <component name="RunManager" selected="Gradle.Tests in 'async-rule-evaluator.test'">
     <configuration name="FiltrexFunctionTests.testBasicFunctionTypes" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -231,11 +231,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'async-rule-evaluator.test'" />
+        <item itemvalue="Gradle.FiltrexFunctionTests.testBasicFunctionTypes" />
+        <item itemvalue="Gradle.Tests in 'com.sesamecare.asyncRuleEvaluator'" />
         <item itemvalue="Gradle.FiltrexLazyContextTests.testLazyMap" />
         <item itemvalue="Gradle.FiltrexSetTests.testUnion" />
-        <item itemvalue="Gradle.Tests in 'com.sesamecare.asyncRuleEvaluator'" />
-        <item itemvalue="Gradle.FiltrexFunctionTests.testBasicFunctionTypes" />
-        <item itemvalue="Gradle.Tests in 'async-rule-evaluator.test'" />
       </list>
     </recent_temporary>
   </component>
@@ -249,7 +249,7 @@
       <updated>1686405410591</updated>
       <workItem from="1686405411602" duration="628000" />
       <workItem from="1686406047322" duration="18498000" />
-      <workItem from="1686442051169" duration="22847000" />
+      <workItem from="1686442051169" duration="24518000" />
     </task>
     <servers />
   </component>
@@ -261,47 +261,47 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>174</line>
+          <line>181</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>187</line>
+          <line>194</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>244</line>
+          <line>251</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>251</line>
+          <line>258</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>295</line>
+          <line>302</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>300</line>
+          <line>307</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>305</line>
+          <line>312</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>181</line>
+          <line>188</line>
           <option name="timeStamp" value="56" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>59</line>
+          <line>66</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -326,12 +326,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>119</line>
+          <line>126</line>
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java</url>
-          <line>131</line>
+          <line>138</line>
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -355,5 +355,8 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/async_rule_evaluator$FiltrexFunctionTests_testBasicFunctionTypes.ic" NAME="FiltrexFunctionTests.testBasicFunctionTypes Coverage Results" MODIFIED="1686591368536" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

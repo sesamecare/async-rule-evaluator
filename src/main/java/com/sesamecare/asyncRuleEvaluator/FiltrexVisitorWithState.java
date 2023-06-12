@@ -3,7 +3,6 @@ package com.sesamecare.asyncRuleEvaluator;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.RuleNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.apache.commons.lang3.RegExUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,18 +26,26 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
         return new Value(list);
     }
 
-    private Value resolve(String symbol) {
+    private Value resolveDottedNotation(String symbol) {
         var paths = symbol.split("\\.");
         Map<String, Value> current = inputData;
         for (int i = 0; i < paths.length; i++) {
             var path = paths[i];
             if (current.containsKey(path)) {
-                var value = current.get(path).resolve();
+                var value = current.get(path);
                 if (value.getType() == ValueType.MAP) {
                     current = value.getMap();
                 }
                 if (i == paths.length - 1) {
                     return value;
+                }
+                if (value.getType() == ValueType.FUNCTION || value.getType() == ValueType.MEMOIZED) {
+                    var resolved = value.resolve();
+                    if (resolved.getType() == ValueType.MAP) {
+                        current = resolved.getMap();
+                    } else {
+                        return Value.NULL;
+                    }
                 }
             } else {
                 return Value.NULL;
@@ -74,7 +81,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
             return Value.TRUE;
         }
         var rhs = visit(ctx.e(1));
-        return new Value(rhs.asBoolean());
+        return rhs.asBoolean() ? Value.TRUE : Value.FALSE;
     }
 
     @Override
@@ -94,7 +101,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
     @Override
     public Value visitSymbol(FiltrexParser.SymbolContext ctx) {
         var symbol = ctx.SYMBOL().toString();
-        return resolve(symbol);
+        return resolveDottedNotation(symbol).resolve();
     }
 
     @Override
@@ -112,7 +119,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
     public Value visitLessThan(FiltrexParser.LessThanContext ctx) {
         var lhs = visit(ctx.e(0));
         var rhs = visit(ctx.e(1));
-        return new Value(lhs.compareTo(rhs) == -1);
+        return lhs.compareTo(rhs) == -1 ? Value.TRUE : Value.FALSE;
     }
 
     @Override
@@ -121,7 +128,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
         var args = visit(ctx.argsList());
         var result = BuiltInFunctions.execute(fn, args.getArray());
         if (result == null) {
-            var custom = resolve(fn);
+            var custom = resolveDottedNotation(fn);
             result = custom.apply(args.getArray());
         }
         return result;
@@ -132,7 +139,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
         var fn = ctx.SYMBOL().getText();
         var result = BuiltInFunctions.execute(fn, Value.EMPTY.getArray());
         if (result == null) {
-            var custom = resolve(fn);
+            var custom = resolveDottedNotation(fn);
             result = custom.apply(Value.EMPTY.getArray());
         }
         return result;
@@ -151,7 +158,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
     public Value visitGreaterThan(FiltrexParser.GreaterThanContext ctx) {
         var lhs = visit(ctx.e(0));
         var rhs = visit(ctx.e(1));
-        return new Value(lhs.compareTo(rhs) == 1);
+        return lhs.compareTo(rhs) == 1 ? Value.TRUE : Value.FALSE;
     }
 
     @Override
@@ -192,33 +199,33 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
     public Value visitGreaterThanEquals(FiltrexParser.GreaterThanEqualsContext ctx) {
         var lhs = visit(ctx.e(0));
         var rhs = visit(ctx.e(1));
-        return new Value(lhs.compareTo(rhs) != -1);
+        return lhs.compareTo(rhs) != -1 ? Value.TRUE : Value.FALSE;
     }
 
     @Override
     public Value visitNot(FiltrexParser.NotContext ctx) {
-        return new Value(!visit(ctx.e()).asBoolean());
+        return visit(ctx.e()).asBoolean() ? Value.FALSE : Value.TRUE;
     }
 
     @Override
     public Value visitEquals(FiltrexParser.EqualsContext ctx) {
         var lhs = visit(ctx.e(0));
         var rhs = visit(ctx.e(1));
-        return new Value(lhs.compareTo(rhs) == 0);
+        return lhs.compareTo(rhs) == 0 ? Value.TRUE : Value.FALSE;
     }
 
     @Override
     public Value visitNotEquals(FiltrexParser.NotEqualsContext ctx) {
         var lhs = visit(ctx.e(0));
         var rhs = visit(ctx.e(1));
-        return new Value(lhs.compareTo(rhs) != 0);
+        return lhs.compareTo(rhs) != 0 ? Value.TRUE : Value.FALSE;
     }
 
     @Override
     public Value visitAnd(FiltrexParser.AndContext ctx) {
         var lhs = visit(ctx.e(0));
         var rhs = visit(ctx.e(1));
-        return new Value(lhs.asBoolean() && rhs.asBoolean());
+        return lhs.asBoolean() && rhs.asBoolean() ? Value.TRUE : Value.FALSE;
     }
 
     @Override
@@ -265,7 +272,7 @@ public class FiltrexVisitorWithState extends FiltrexBaseVisitor<Value> {
     public Value visitLessThanEquals(FiltrexParser.LessThanEqualsContext ctx) {
         var lhs = visit(ctx.e(0));
         var rhs = visit(ctx.e(1));
-        return new Value(lhs.compareTo(rhs) != 1);
+        return lhs.compareTo(rhs) != 1 ? Value.TRUE : Value.FALSE;
     }
 
     @Override
