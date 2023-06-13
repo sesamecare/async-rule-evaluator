@@ -60,8 +60,9 @@ class BuiltInFunctions {
             case "union":
             case "intersection":
             case "difference":
-            case "unique":
                 return setOp(fn, args);
+            case "unique":
+                return unique(args.get(0));
         }
         return null;
     }
@@ -109,6 +110,17 @@ class BuiltInFunctions {
             }
         }
         return new Value(intersection);
+    }
+
+    static Value unique(Value s1) {
+        var unique = new ArrayList<Value>();
+        var other = s1.asArray();
+        for (var e : other) {
+            if (e.in(new Value(unique), true) == Value.FALSE) {
+                unique.add(e);
+            }
+        }
+        return new Value(unique);
     }
 
     static Value difference(Value s1, Value s2) {

@@ -15,5 +15,8 @@ public class FiltrexSetTests extends BaseFiltrexTest {
 
         pass("[1, 2] in difference([1, 2, 3, 4], [4, 3])");
         pass("[3, 4] not in difference([1, 2, 3, 4], [4, 3])");
+
+        pass("1 in unique([1, 1, 1])");
+        pass("length(unique([1, 1, 1])) == 1");
     }
 }

@@ -84,5 +84,6 @@ substr(x, start, end) | Get a part of a string
 union(a, b, c...) | Union of arrays (variable length of args)
 intersection(a, b, c...) | Intersection of arrays (variable length of args)
 difference(a, b, c...) | Remove all elements of a that are in b, c...
+unique(a) | Get unique elements of a
 
 Operator precedence follows that of any sane language.
