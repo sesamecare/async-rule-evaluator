@@ -17,7 +17,6 @@ Features
 
 Expressions
 -----------
-
 There are only 3 types: numbers, strings and arrays of these. Numbers may be floating point or integers. Boolean logic is applied on the truthy value of values (e.g. any non-zero number is true, any non-empty string is true, otherwise false).
 
 Okay, I lied to you, there are also objects whose properties can be accessed with dot and array notation (thanks to lodash.toPath). And there's undefined. But everything else is just numbers, strings and arrays!
