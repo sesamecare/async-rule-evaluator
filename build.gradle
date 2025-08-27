@@ -24,7 +24,7 @@ tasks.withType(Test).configureEach { javaLauncher = jdk21 }
 tasks.withType(JavaExec).configureEach { javaLauncher = jdk21 }
 
 group = "com.sesamecare"
-version = "0.0.1-SNAPSHOT"
+version = System.getProperty("version") ?: "0.0.1-SNAPSHOT"
 
 repositories() {
     mavenCentral()
