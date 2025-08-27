@@ -7,13 +7,7 @@
     <list default="true" id="a4b7774a-ffb7-481d-949f-52f5a069dc9a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/antlr/com/sesamecare/asyncRuleEvaluator/Filtrex.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/antlr/com/sesamecare/asyncRuleEvaluator/Filtrex.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/BuiltInFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/BuiltInFunctions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexRuntimeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexRuntimeException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/FiltrexVisitorWithState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/Value.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/Value.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/ValueType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sesamecare/asyncRuleEvaluator/ValueType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +74,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
   <component name="ProjectId" id="2R16nvErDnEmLoz3vOjVeG7e8pS" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -90,8 +87,12 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/memetral/dev/sesame/async-rule-evaluator",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -110,6 +111,11 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.Tests in 'async-rule-evaluator.test'">
+    <configuration default="true" type="OPA_TEST_RUN_CONFIGURATION" factoryName="Opa configuration factory">
+      <option name="additionalargs" value="" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="FiltrexFunctionTests.testBasicFunctionTypes" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -131,7 +137,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="FiltrexLazyContextTests.testLazyMap" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -155,7 +161,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="FiltrexSetTests.testUnion" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -179,7 +185,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="Tests in 'async-rule-evaluator.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -201,7 +207,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="Tests in 'com.sesamecare.asyncRuleEvaluator'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -225,12 +231,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="OPA_TEST_RUN_CONFIGURATION" factoryName="Opa configuration factory">
-      <option name="additionalargs" value="" />
-      <envs />
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -243,6 +244,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26574.91" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26574.91" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -254,6 +263,7 @@
       <workItem from="1686405411602" duration="628000" />
       <workItem from="1686406047322" duration="18498000" />
       <workItem from="1686442051169" duration="30256000" />
+      <workItem from="1756318179822" duration="160000" />
     </task>
     <servers />
   </component>
