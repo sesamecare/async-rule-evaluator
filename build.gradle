@@ -1,9 +1,11 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     id 'java-library'
     id 'antlr'
     id 'signing'
     id 'maven-publish'
-    id('io.github.gradle-nexus.publish-plugin') version '1.1.0'
+    id("com.vanniktech.maven.publish") version "0.30.0"
 }
 
 java {
@@ -83,48 +85,33 @@ javadoc {
 
 sourcesJar.dependsOn ':generateGrammarSource'
 
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-        }
-    }
-}
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from(components.java)
-            pom {
-                name = 'async-rule-evaluator'
-                description = 'A simple DSL based on https://github.com/joewalnes/filtrex and its forks'
-                url = 'https://github.com/sesamecare/async-rule-evaluator'
-                licenses {
-                    license {
-                        name = 'The MIT License'
-                        url = 'https://opensource.org/license/mit/'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'djmax'
-                        name = 'Max Metral'
-                    }
-                }
-                scm {
-                    url = 'https://github.com/sesamecare/async-rule-evaluator'
-                    connection = 'scm:git://github.com/sesamecare/async-rule-evaluator.git'
-                    developerConnection = 'scm:git://github.com/sesamecare/async-rule-evaluator.git'
-                }
+    // Coordinates can be inferred from group/artifact/version, but set explicitly if you like:
+    coordinates("com.sesamecare", "async-rule-evaluator", version as String)
+
+    pom {
+        name.set("async-rule-evaluator")
+        description.set("A simple DSL based on https://github.com/joewalnes/filtrex and its forks")
+        url.set("https://github.com/sesamecare/async-rule-evaluator")
+        licenses {
+            license {
+                name.set("The MIT License")
+                url.set("https://opensource.org/license/mit/")
             }
         }
+        developers {
+            developer {
+                id.set("djmax")
+                name.set("Max Metral")
+            }
+        }
+        scm {
+            url.set("https://github.com/sesamecare/async-rule-evaluator")
+            connection.set("scm:git://github.com/sesamecare/async-rule-evaluator.git")
+            developerConnection.set("scm:git://github.com/sesamecare/async-rule-evaluator.git")
+        }
     }
-}
-
-signing {
-    def signingKey = findProperty("signingKey")
-    def signingPassword = findProperty("signingPassword")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications.mavenJava
 }
