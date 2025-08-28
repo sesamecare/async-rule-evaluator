@@ -74,4 +74,4 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.PGP_SECRET }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.PGP_PASSPHRASE }}
-        run: ./gradlew -Pversion=${VERSION} publishToSonatype --no-daemon
+        run: ./gradlew -Pversion=${VERSION} publishToMavenCentral --no-daemon
