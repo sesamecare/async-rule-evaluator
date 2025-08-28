@@ -12,7 +12,6 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
-    // optional, if you also want to set the classfile target explicitly
     sourceCompatibility = JavaVersion.toVersion(21)
     targetCompatibility = JavaVersion.toVersion(21)
 }
@@ -63,18 +62,20 @@ generateGrammarSource {
     arguments += ["-visitor", "-package", "com.sesamecare.asyncRuleEvaluator"]
 }
 
-compileJava {
-    dependsOn generateGrammarSource
+// Ensure anything that packages/inspects sources runs after ANTLR
+def gen = tasks.named("generateGrammarSource")
+
+tasks.named("compileJava") { dependsOn(gen) } // (usually already true, but safe)
+
+tasks.withType(Javadoc).configureEach { dependsOn(gen) }
+
+// Only *configure* the existing jars; do not create new ones
+tasks.matching { it.name in ["jar", "sourcesJar", "javadocJar"] }.configureEach {
+    dependsOn(gen)
 }
 
 test {
     useJUnitPlatform()
-}
-
-java {
-    toolchain { languageVersion = JavaLanguageVersion.of(21) }
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
 }
 
 javadoc {
