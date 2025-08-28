@@ -84,8 +84,6 @@ javadoc {
     exclude("com/sesamecare/asyncRuleEvaluator/FiltrexBaseVisitor.java")
 }
 
-sourcesJar.dependsOn ':generateGrammarSource'
-
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
