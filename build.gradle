@@ -115,3 +115,9 @@ mavenPublishing {
         }
     }
 }
+
+signing {
+    def key = findProperty("signingKey") ?: System.getenv("PGP_SECRET")
+    def pass = findProperty("signingPassword") ?: System.getenv("PGP_PASSPHRASE")
+    useInMemoryPgpKeys(key, pass)
+}
