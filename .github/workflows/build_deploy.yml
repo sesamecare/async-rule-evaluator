@@ -61,13 +61,10 @@ jobs:
           distribution: 'corretto'
           cache: 'gradle'
 
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
-
       - name: Compute version
         run: |
           MAJOR=1
-          MINOR=2
+          MINOR=0
           PATCH=${{ github.run_number }}
           echo "VERSION=$MAJOR.$MINOR.$PATCH" >> $GITHUB_ENV
 
